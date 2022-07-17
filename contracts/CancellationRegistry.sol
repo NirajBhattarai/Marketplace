@@ -28,14 +28,14 @@ abstract contract Context {
 }
 
 /**
-* @title Precompiled contract that exists in every Arbitrum chain at address(100), 0x0000000000000000000000000000000000000064. Exposes a variety of system-level functionality.
+ * @title Precompiled contract that exists in every Arbitrum chain at address(100), 0x0000000000000000000000000000000000000064. Exposes a variety of system-level functionality.
  */
 interface ArbSys {
     /**
-    * @notice Get Arbitrum block number (distinct from L1 block number; Arbitrum genesis block has block number 0)
-    * @return block number as int
+     * @notice Get Arbitrum block number (distinct from L1 block number; Arbitrum genesis block has block number 0)
+     * @return block number as int
      */
-    function arbBlockNumber() external view returns (uint);
+    function arbBlockNumber() external view returns (uint256);
 }
 
 // File @openzeppelin/contracts/access/Ownable.sol@v4.4.0
@@ -59,7 +59,10 @@ pragma solidity ^0.8.0;
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -99,7 +102,10 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        require(
+            newOwner != address(0),
+            "Ownable: new owner is the zero address"
+        );
         _transferOwnership(newOwner);
     }
 
@@ -114,16 +120,14 @@ abstract contract Ownable is Context {
     }
 }
 
-
 // File Contracts/CancellationRegistry.sol
 
 contract CancellationRegistry is Ownable {
-
     mapping(address => bool) private registrants;
     mapping(bytes32 => uint256) private orderCancellationBlockNumber;
     mapping(bytes => bool) private orderDeactivations;
 
-    modifier onlyRegistrants {
+    modifier onlyRegistrants() {
         require(registrants[msg.sender], "The caller is not a registrant.");
         _;
     }
@@ -137,41 +141,49 @@ contract CancellationRegistry is Ownable {
     }
 
     /*
-    * @dev Cancels an order.
-    */
+     * @dev Cancels an order.
+     */
     function cancelPreviousSellOrders(
         address seller,
         address tokenAddr,
         uint256 tokenId
     ) external onlyRegistrants {
-        bytes32 cancellationDigest = keccak256(abi.encode(seller, tokenAddr, tokenId));
-        orderCancellationBlockNumber[cancellationDigest] = ArbSys(address(100)).arbBlockNumber();
+        bytes32 cancellationDigest = keccak256(
+            abi.encode(seller, tokenAddr, tokenId)
+        );
+        orderCancellationBlockNumber[cancellationDigest] = ArbSys(address(100))
+            .arbBlockNumber();
     }
 
     /*
-    * @dev Check if an order has been cancelled.
-    */
+     * @dev Check if an order has been cancelled.
+     */
     function getSellOrderCancellationBlockNumber(
         address addr,
         address tokenAddr,
         uint256 tokenId
     ) external view returns (uint256) {
-        bytes32 cancellationDigest = keccak256(abi.encode(addr, tokenAddr, tokenId));
+        bytes32 cancellationDigest = keccak256(
+            abi.encode(addr, tokenAddr, tokenId)
+        );
         return orderCancellationBlockNumber[cancellationDigest];
     }
 
     /*
-    * @dev Cancels an order.
-    */
+     * @dev Cancels an order.
+     */
     function cancelOrder(bytes memory signature) external onlyRegistrants {
         orderDeactivations[signature] = true;
     }
 
     /*
-    * @dev Check if an order has been cancelled.
-    */
-    function isOrderCancelled(bytes memory signature) external view returns (bool) {
+     * @dev Check if an order has been cancelled.
+     */
+    function isOrderCancelled(bytes memory signature)
+        external
+        view
+        returns (bool)
+    {
         return orderDeactivations[signature];
     }
-
 }

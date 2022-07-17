@@ -1,6 +1,6 @@
 /**
  *Submitted for verification at Arbiscan on 2022-05-27
-*/
+ */
 
 // Sources flattened with hardhat v2.7.1 https://hardhat.org
 
@@ -14,16 +14,24 @@ interface IRoyaltyRegistry {
 
     function removeRegistrant(address registrant) external;
 
-    function setRoyalty(address _erc721address, address payable _payoutAddress, uint256 _payoutPerMille) external;
+    function setRoyalty(
+        address _erc721address,
+        address payable _payoutAddress,
+        uint256 _payoutPerMille
+    ) external;
 
-    function getRoyaltyPayoutAddress(address _erc721address) external view returns (address payable);
+    function getRoyaltyPayoutAddress(address _erc721address)
+        external
+        view
+        returns (address payable);
 
-    function getRoyaltyPayoutRate(address _erc721address) external view returns (uint256);
+    function getRoyaltyPayoutRate(address _erc721address)
+        external
+        view
+        returns (uint256);
 }
 
-
 // File contracts/ICancellationRegistry.sol
-
 
 pragma solidity ^0.8.0;
 
@@ -34,30 +42,37 @@ interface ICancellationRegistry {
 
     function cancelOrder(bytes memory signature) external;
 
-    function isOrderCancelled(bytes memory signature) external view returns (bool);
+    function isOrderCancelled(bytes memory signature)
+        external
+        view
+        returns (bool);
 
-    function cancelPreviousSellOrders(address seller, address tokenAddr, uint256 tokenId) external;
+    function cancelPreviousSellOrders(
+        address seller,
+        address tokenAddr,
+        uint256 tokenId
+    ) external;
 
-    function getSellOrderCancellationBlockNumber(address addr, address tokenAddr, uint256 tokenId) external view returns (uint256);
+    function getSellOrderCancellationBlockNumber(
+        address addr,
+        address tokenAddr,
+        uint256 tokenId
+    ) external view returns (uint256);
 }
-
 
 // File contracts/IPaymentERC20Registry.sol
 
-
 pragma solidity ^0.8.0;
 
-interface IPaymentERC20Registry {  
-  function isApprovedERC20(address _token) external view returns (bool);
+interface IPaymentERC20Registry {
+    function isApprovedERC20(address _token) external view returns (bool);
 
-  function addApprovedERC20(address _token) external;
+    function addApprovedERC20(address _token) external;
 
-  function removeApprovedERC20(address _token) external;
+    function removeApprovedERC20(address _token) external;
 }
 
-
 // File @openzeppelin/contracts/utils/Context.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
 
@@ -83,9 +98,7 @@ abstract contract Context {
     }
 }
 
-
 // File @openzeppelin/contracts/access/Ownable.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
 
@@ -106,7 +119,10 @@ pragma solidity ^0.8.0;
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -146,7 +162,10 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        require(
+            newOwner != address(0),
+            "Ownable: new owner is the zero address"
+        );
         _transferOwnership(newOwner);
     }
 
@@ -161,9 +180,7 @@ abstract contract Ownable is Context {
     }
 }
 
-
 // File @openzeppelin/contracts/utils/introspection/IERC165.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
 
@@ -190,9 +207,7 @@ interface IERC165 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
 
-
 // File @openzeppelin/contracts/token/ERC721/IERC721.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721.sol)
 
@@ -205,17 +220,29 @@ interface IERC721 is IERC165 {
     /**
      * @dev Emitted when `tokenId` token is transferred from `from` to `to`.
      */
-    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
+    event Transfer(
+        address indexed from,
+        address indexed to,
+        uint256 indexed tokenId
+    );
 
     /**
      * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
      */
-    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
+    event Approval(
+        address indexed owner,
+        address indexed approved,
+        uint256 indexed tokenId
+    );
 
     /**
      * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
      */
-    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
+    event ApprovalForAll(
+        address indexed owner,
+        address indexed operator,
+        bool approved
+    );
 
     /**
      * @dev Returns the number of tokens in ``owner``'s account.
@@ -293,7 +320,10 @@ interface IERC721 is IERC165 {
      *
      * - `tokenId` must exist.
      */
-    function getApproved(uint256 tokenId) external view returns (address operator);
+    function getApproved(uint256 tokenId)
+        external
+        view
+        returns (address operator);
 
     /**
      * @dev Approve or remove `operator` as an operator for the caller.
@@ -312,7 +342,10 @@ interface IERC721 is IERC165 {
      *
      * See {setApprovalForAll}
      */
-    function isApprovedForAll(address owner, address operator) external view returns (bool);
+    function isApprovedForAll(address owner, address operator)
+        external
+        view
+        returns (bool);
 
     /**
      * @dev Safely transfers `tokenId` token from `from` to `to`.
@@ -335,17 +368,13 @@ interface IERC721 is IERC165 {
     ) external;
 }
 
-
 // File @openzeppelin/contracts/interfaces/IERC721.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (interfaces/IERC721.sol)
 
 pragma solidity ^0.8.0;
 
-
 // File @openzeppelin/contracts/token/ERC1155/IERC1155.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (token/ERC1155/IERC1155.sol)
 
@@ -361,7 +390,13 @@ interface IERC1155 is IERC165 {
     /**
      * @dev Emitted when `value` tokens of token type `id` are transferred from `from` to `to` by `operator`.
      */
-    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+    event TransferSingle(
+        address indexed operator,
+        address indexed from,
+        address indexed to,
+        uint256 id,
+        uint256 value
+    );
 
     /**
      * @dev Equivalent to multiple {TransferSingle} events, where `operator`, `from` and `to` are the same for all
@@ -379,7 +414,11 @@ interface IERC1155 is IERC165 {
      * @dev Emitted when `account` grants or revokes permission to `operator` to transfer their tokens, according to
      * `approved`.
      */
-    event ApprovalForAll(address indexed account, address indexed operator, bool approved);
+    event ApprovalForAll(
+        address indexed account,
+        address indexed operator,
+        bool approved
+    );
 
     /**
      * @dev Emitted when the URI for token type `id` changes to `value`, if it is a non-programmatic URI.
@@ -397,7 +436,10 @@ interface IERC1155 is IERC165 {
      *
      * - `account` cannot be the zero address.
      */
-    function balanceOf(address account, uint256 id) external view returns (uint256);
+    function balanceOf(address account, uint256 id)
+        external
+        view
+        returns (uint256);
 
     /**
      * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {balanceOf}.
@@ -427,7 +469,10 @@ interface IERC1155 is IERC165 {
      *
      * See {setApprovalForAll}.
      */
-    function isApprovedForAll(address account, address operator) external view returns (bool);
+    function isApprovedForAll(address account, address operator)
+        external
+        view
+        returns (bool);
 
     /**
      * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
@@ -470,17 +515,13 @@ interface IERC1155 is IERC165 {
     ) external;
 }
 
-
 // File @openzeppelin/contracts/interfaces/IERC1155.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (interfaces/IERC1155.sol)
 
 pragma solidity ^0.8.0;
 
-
 // File @openzeppelin/contracts/token/ERC20/IERC20.sol@v4.5.0
-
 
 // OpenZeppelin Contracts (last updated v4.5.0) (token/ERC20/IERC20.sol)
 
@@ -516,7 +557,10 @@ interface IERC20 {
      *
      * This value changes when {approve} or {transferFrom} are called.
      */
-    function allowance(address owner, address spender) external view returns (uint256);
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256);
 
     /**
      * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
@@ -561,20 +605,20 @@ interface IERC20 {
      * @dev Emitted when the allowance of a `spender` for an `owner` is set by
      * a call to {approve}. `value` is the new allowance.
      */
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
 }
 
-
 // File @openzeppelin/contracts/interfaces/IERC20.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (interfaces/IERC20.sol)
 
 pragma solidity ^0.8.0;
 
-
 // File @openzeppelin/contracts/utils/introspection/ERC165Checker.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/ERC165Checker.sol)
 
@@ -608,9 +652,15 @@ library ERC165Checker {
      *
      * See {IERC165-supportsInterface}.
      */
-    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {
+    function supportsInterface(address account, bytes4 interfaceId)
+        internal
+        view
+        returns (bool)
+    {
         // query support of both ERC165 as per the spec and support of _interfaceId
-        return supportsERC165(account) && _supportsERC165Interface(account, interfaceId);
+        return
+            supportsERC165(account) &&
+            _supportsERC165Interface(account, interfaceId);
     }
 
     /**
@@ -623,11 +673,10 @@ library ERC165Checker {
      *
      * _Available since v3.4._
      */
-    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds)
-        internal
-        view
-        returns (bool[] memory)
-    {
+    function getSupportedInterfaces(
+        address account,
+        bytes4[] memory interfaceIds
+    ) internal view returns (bool[] memory) {
         // an array of booleans corresponding to interfaceIds and whether they're supported or not
         bool[] memory interfaceIdsSupported = new bool[](interfaceIds.length);
 
@@ -635,7 +684,10 @@ library ERC165Checker {
         if (supportsERC165(account)) {
             // query support of each interface in interfaceIds
             for (uint256 i = 0; i < interfaceIds.length; i++) {
-                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);
+                interfaceIdsSupported[i] = _supportsERC165Interface(
+                    account,
+                    interfaceIds[i]
+                );
             }
         }
 
@@ -651,7 +703,10 @@ library ERC165Checker {
      *
      * See {IERC165-supportsInterface}.
      */
-    function supportsAllInterfaces(address account, bytes4[] memory interfaceIds) internal view returns (bool) {
+    function supportsAllInterfaces(
+        address account,
+        bytes4[] memory interfaceIds
+    ) internal view returns (bool) {
         // query support of ERC165 itself
         if (!supportsERC165(account)) {
             return false;
@@ -679,17 +734,24 @@ library ERC165Checker {
      * with {supportsERC165}.
      * Interface identification is specified in ERC-165.
      */
-    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {
-        bytes memory encodedParams = abi.encodeWithSelector(IERC165.supportsInterface.selector, interfaceId);
-        (bool success, bytes memory result) = account.staticcall{gas: 30000}(encodedParams);
+    function _supportsERC165Interface(address account, bytes4 interfaceId)
+        private
+        view
+        returns (bool)
+    {
+        bytes memory encodedParams = abi.encodeWithSelector(
+            IERC165.supportsInterface.selector,
+            interfaceId
+        );
+        (bool success, bytes memory result) = account.staticcall{gas: 30000}(
+            encodedParams
+        );
         if (result.length < 32) return false;
         return success && abi.decode(result, (bool));
     }
 }
 
-
 // File @openzeppelin/contracts/utils/Strings.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (utils/Strings.sol)
 
@@ -745,7 +807,11 @@ library Strings {
     /**
      * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.
      */
-    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {
+    function toHexString(uint256 value, uint256 length)
+        internal
+        pure
+        returns (string memory)
+    {
         bytes memory buffer = new bytes(2 * length + 2);
         buffer[0] = "0";
         buffer[1] = "x";
@@ -758,9 +824,7 @@ library Strings {
     }
 }
 
-
 // File @openzeppelin/contracts/utils/cryptography/ECDSA.sol@v4.5.0
-
 
 // OpenZeppelin Contracts (last updated v4.5.0) (utils/cryptography/ECDSA.sol)
 
@@ -815,7 +879,11 @@ library ECDSA {
      *
      * _Available since v4.3._
      */
-    function tryRecover(bytes32 hash, bytes memory signature) internal pure returns (address, RecoverError) {
+    function tryRecover(bytes32 hash, bytes memory signature)
+        internal
+        pure
+        returns (address, RecoverError)
+    {
         // Check the signature length
         // - case 65: r,s,v signature (standard)
         // - case 64: r,vs signature (cf https://eips.ethereum.org/EIPS/eip-2098) _Available since v4.1._
@@ -860,7 +928,11 @@ library ECDSA {
      * this is by receiving a hash of the original message (which may otherwise
      * be too long), and then calling {toEthSignedMessageHash} on it.
      */
-    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {
+    function recover(bytes32 hash, bytes memory signature)
+        internal
+        pure
+        returns (address)
+    {
         (address recovered, RecoverError error) = tryRecover(hash, signature);
         _throwError(error);
         return recovered;
@@ -878,7 +950,10 @@ library ECDSA {
         bytes32 r,
         bytes32 vs
     ) internal pure returns (address, RecoverError) {
-        bytes32 s = vs & bytes32(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);
+        bytes32 s = vs &
+            bytes32(
+                0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+            );
         uint8 v = uint8((uint256(vs) >> 255) + 27);
         return tryRecover(hash, v, r, s);
     }
@@ -919,7 +994,10 @@ library ECDSA {
         // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or
         // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept
         // these malleable signatures as well.
-        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) {
+        if (
+            uint256(s) >
+            0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0
+        ) {
             return (address(0), RecoverError.InvalidSignatureS);
         }
         if (v != 27 && v != 28) {
@@ -958,10 +1036,17 @@ library ECDSA {
      *
      * See {recover}.
      */
-    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {
+    function toEthSignedMessageHash(bytes32 hash)
+        internal
+        pure
+        returns (bytes32)
+    {
         // 32 is the length in bytes of hash,
         // enforced by the type signature above
-        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
+        return
+            keccak256(
+                abi.encodePacked("\x19Ethereum Signed Message:\n32", hash)
+            );
     }
 
     /**
@@ -972,8 +1057,19 @@ library ECDSA {
      *
      * See {recover}.
      */
-    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n", Strings.toString(s.length), s));
+    function toEthSignedMessageHash(bytes memory s)
+        internal
+        pure
+        returns (bytes32)
+    {
+        return
+            keccak256(
+                abi.encodePacked(
+                    "\x19Ethereum Signed Message:\n",
+                    Strings.toString(s.length),
+                    s
+                )
+            );
     }
 
     /**
@@ -985,14 +1081,19 @@ library ECDSA {
      *
      * See {recover}.
      */
-    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32) {
-        return keccak256(abi.encodePacked("\x19\x01", domainSeparator, structHash));
+    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash)
+        internal
+        pure
+        returns (bytes32)
+    {
+        return
+            keccak256(
+                abi.encodePacked("\x19\x01", domainSeparator, structHash)
+            );
     }
 }
 
-
 // File @openzeppelin/contracts/utils/Address.sol@v4.5.0
-
 
 // OpenZeppelin Contracts (last updated v4.5.0) (utils/Address.sol)
 
@@ -1053,10 +1154,16 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address: insufficient balance");
+        require(
+            address(this).balance >= amount,
+            "Address: insufficient balance"
+        );
 
         (bool success, ) = recipient.call{value: amount}("");
-        require(success, "Address: unable to send value, recipient may have reverted");
+        require(
+            success,
+            "Address: unable to send value, recipient may have reverted"
+        );
     }
 
     /**
@@ -1077,7 +1184,10 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
+    function functionCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
         return functionCall(target, data, "Address: low-level call failed");
     }
 
@@ -1111,7 +1221,13 @@ library Address {
         bytes memory data,
         uint256 value
     ) internal returns (bytes memory) {
-        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+        return
+            functionCallWithValue(
+                target,
+                data,
+                value,
+                "Address: low-level call with value failed"
+            );
     }
 
     /**
@@ -1126,10 +1242,15 @@ library Address {
         uint256 value,
         string memory errorMessage
     ) internal returns (bytes memory) {
-        require(address(this).balance >= value, "Address: insufficient balance for call");
+        require(
+            address(this).balance >= value,
+            "Address: insufficient balance for call"
+        );
         require(isContract(target), "Address: call to non-contract");
 
-        (bool success, bytes memory returndata) = target.call{value: value}(data);
+        (bool success, bytes memory returndata) = target.call{value: value}(
+            data
+        );
         return verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -1139,8 +1260,17 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
-        return functionStaticCall(target, data, "Address: low-level static call failed");
+    function functionStaticCall(address target, bytes memory data)
+        internal
+        view
+        returns (bytes memory)
+    {
+        return
+            functionStaticCall(
+                target,
+                data,
+                "Address: low-level static call failed"
+            );
     }
 
     /**
@@ -1166,8 +1296,16 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
-        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    function functionDelegateCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
+        return
+            functionDelegateCall(
+                target,
+                data,
+                "Address: low-level delegate call failed"
+            );
     }
 
     /**
@@ -1216,9 +1354,7 @@ library Address {
     }
 }
 
-
 // File @openzeppelin/contracts/security/Pausable.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (security/Pausable.sol)
 
@@ -1309,9 +1445,7 @@ abstract contract Pausable is Context {
     }
 }
 
-
 // File @openzeppelin/contracts/security/ReentrancyGuard.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (security/ReentrancyGuard.sol)
 
@@ -1376,14 +1510,11 @@ abstract contract ReentrancyGuard {
     }
 }
 
-
 // File @openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (token/ERC20/utils/SafeERC20.sol)
 
 pragma solidity ^0.8.0;
-
 
 /**
  * @title SafeERC20
@@ -1402,7 +1533,10 @@ library SafeERC20 {
         address to,
         uint256 value
     ) internal {
-        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(token.transfer.selector, to, value)
+        );
     }
 
     function safeTransferFrom(
@@ -1411,7 +1545,10 @@ library SafeERC20 {
         address to,
         uint256 value
     ) internal {
-        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(token.transferFrom.selector, from, to, value)
+        );
     }
 
     /**
@@ -1433,7 +1570,10 @@ library SafeERC20 {
             (value == 0) || (token.allowance(address(this), spender) == 0),
             "SafeERC20: approve from non-zero to non-zero allowance"
         );
-        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(token.approve.selector, spender, value)
+        );
     }
 
     function safeIncreaseAllowance(
@@ -1442,7 +1582,14 @@ library SafeERC20 {
         uint256 value
     ) internal {
         uint256 newAllowance = token.allowance(address(this), spender) + value;
-        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+        _callOptionalReturn(
+            token,
+            abi.encodeWithSelector(
+                token.approve.selector,
+                spender,
+                newAllowance
+            )
+        );
     }
 
     function safeDecreaseAllowance(
@@ -1452,9 +1599,19 @@ library SafeERC20 {
     ) internal {
         unchecked {
             uint256 oldAllowance = token.allowance(address(this), spender);
-            require(oldAllowance >= value, "SafeERC20: decreased allowance below zero");
+            require(
+                oldAllowance >= value,
+                "SafeERC20: decreased allowance below zero"
+            );
             uint256 newAllowance = oldAllowance - value;
-            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+            _callOptionalReturn(
+                token,
+                abi.encodeWithSelector(
+                    token.approve.selector,
+                    spender,
+                    newAllowance
+                )
+            );
         }
     }
 
@@ -1469,142 +1626,137 @@ library SafeERC20 {
         // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that
         // the target address contains contract code and also asserts for success in the low-level call.
 
-        bytes memory returndata = address(token).functionCall(data, "SafeERC20: low-level call failed");
+        bytes memory returndata = address(token).functionCall(
+            data,
+            "SafeERC20: low-level call failed"
+        );
         if (returndata.length > 0) {
             // Return data is optional
-            require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
+            require(
+                abi.decode(returndata, (bool)),
+                "SafeERC20: ERC20 operation did not succeed"
+            );
         }
     }
 }
 
-
 // File contracts/ExchangeV4.sol
-
 
 pragma solidity ^0.8.0;
 
 /* Interfaces */
 
-
-
 /* Libraries */
-
 
 contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     using SafeERC20 for IERC20;
     using ERC165Checker for address;
 
-    bytes4 private InterfaceId_ERC721 = 0x80ac58cd;  // The ERC-165 identifier for 721
+    bytes4 private InterfaceId_ERC721 = 0x80ac58cd; // The ERC-165 identifier for 721
     bytes4 private InterfaceId_ERC1155 = 0xd9b67a26; // The ERC-165 identifier for 1155
 
     address payable _makerWallet;
     uint256 private _makerFeePerMille = 25;
     uint256 private _maxRoyaltyPerMille = 150;
 
-    bytes32 private EIP712_DOMAIN_TYPE_HASH = keccak256("EIP712Domain(string name,string version)");
-    bytes32 private DOMAIN_SEPARATOR = keccak256(abi.encode(
-            EIP712_DOMAIN_TYPE_HASH,
-            keccak256(bytes("Pocket Of Quarters")),
-            keccak256(bytes("4"))
-        ));
+    bytes32 private EIP712_DOMAIN_TYPE_HASH =
+        keccak256("EIP712Domain(string name,string version)");
+    bytes32 private DOMAIN_SEPARATOR =
+        keccak256(
+            abi.encode(
+                EIP712_DOMAIN_TYPE_HASH,
+                keccak256(bytes("Pocket Of Quarters")),
+                keccak256(bytes("4"))
+            )
+        );
 
     IRoyaltyRegistry royaltyRegistry;
     ICancellationRegistry cancellationRegistry;
     IPaymentERC20Registry paymentERC20Registry;
 
-    event SellOrderFilled(address indexed seller, address payable buyer, address indexed contractAddress, uint256 indexed tokenId, uint256 price);
-    event BuyOrderFilled(address indexed seller, address payable buyer, address indexed contractAddress, uint256 indexed tokenId, uint256 price);
-    event DutchAuctionFilled(address indexed seller, address payable buyer, address indexed contractAddress, uint256 indexed tokenId, uint256 price);
-
+    event SellOrderFilled(
+        address indexed seller,
+        address payable buyer,
+        address indexed contractAddress,
+        uint256 indexed tokenId,
+        uint256 price
+    );
+    event BuyOrderFilled(
+        address indexed seller,
+        address payable buyer,
+        address indexed contractAddress,
+        uint256 indexed tokenId,
+        uint256 price
+    );
+    event DutchAuctionFilled(
+        address indexed seller,
+        address payable buyer,
+        address indexed contractAddress,
+        uint256 indexed tokenId,
+        uint256 price
+    );
 
     /* This contains all data of the SellOrder */
     struct SellOrder {
-
         /* Seller of the NFT */
         address payable seller;
-
         /* Contract address of NFT */
         address contractAddress;
-
         /* Token id of NFT to sell */
         uint256 tokenId;
-
         /* Start time in unix timestamp */
         uint256 startTime;
-
         /* Expiration in unix timestamp */
         uint256 expiration;
-
         /* Price in wei */
         uint256 price;
-
         /* Number of tokens to transfer; should be 1 for ERC721 */
         uint256 quantity;
-
         /* Block number that this order was created at */
         uint256 createdAtBlockNumber;
-
         /* Address of the ERC20 token for the payment. Will be the zero-address for payments in native ETH. */
         address paymentERC20;
     }
 
     /* This contains all data of the BuyOrder */
     struct BuyOrder {
-
         /* Seller of the NFT */
         address payable buyer;
-
         /* Contract address of NFT */
         address contractAddress;
-
         /* Token id of NFT to sell */
         uint256 tokenId;
-
         /* Start time in unix timestamp */
         uint256 startTime;
-
         /* Expiration in unix timestamp */
         uint256 expiration;
-
         /* Price in wei */
         uint256 price;
-
         /* Number of tokens to transfer; should be 1 for ERC721 */
         uint256 quantity;
-
         /* Address of the ERC20 token for the payment. */
         address paymentERC20;
     }
 
     struct DutchAuctionOrder {
-
         /* Seller of the NFT */
         address payable seller;
-
         /* Contract address of NFT */
         address contractAddress;
-
         /* Token id of NFT to sell */
         uint256 tokenId;
-
         /* Start time in unix timestamp */
         uint256 startTime;
-
         /* End time in unix timestamp */
         uint256 endTime;
-
         /* Price in wei */
         uint256 startPrice;
-
         /* Price in wei */
         uint256 endPrice;
-
         /* Number of tokens to transfer; should be 1 for ERC721 */
         uint256 quantity;
-
         /* Block number that this order was created at */
         uint256 createdAtBlockNumber;
-
         /* Address of the ERC20 token for the payment. */
         address paymentERC20;
     }
@@ -1614,11 +1766,11 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
      ********************/
 
     /*
-    * @dev External trade function. This accepts the details of the sell order and signed sell
-    * order (the signature) as a meta-transaction.
-    *
-    * Emits a {SellOrderFilled} event via `_fillSellOrder`.
-    */
+     * @dev External trade function. This accepts the details of the sell order and signed sell
+     * order (the signature) as a meta-transaction.
+     *
+     * Emits a {SellOrderFilled} event via `_fillSellOrder`.
+     */
     function fillSellOrder(
         address payable seller,
         address contractAddress,
@@ -1635,7 +1787,10 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         // If the payment ERC20 is the zero address, we check that enough native ETH has been sent
         // with the transaction. Otherwise, we use the supplied ERC20 payment token.
         if (paymentERC20 == address(0)) {
-            require(msg.value >= price, "Transaction doesn't have the required ETH amount.");
+            require(
+                msg.value >= price,
+                "Transaction doesn't have the required ETH amount."
+            );
         } else {
             _checkValidERC20Payment(buyer, price, paymentERC20);
         }
@@ -1654,15 +1809,25 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
 
         /* Make sure the order is not cancelled */
         require(
-            cancellationRegistry.getSellOrderCancellationBlockNumber(seller, contractAddress, tokenId) < createdAtBlockNumber,
+            cancellationRegistry.getSellOrderCancellationBlockNumber(
+                seller,
+                contractAddress,
+                tokenId
+            ) < createdAtBlockNumber,
             "This order has been cancelled."
         );
 
         /* Check signature */
-        require(_validateSellerSignature(sellOrder, signature), "Signature is not valid for SellOrder.");
+        require(
+            _validateSellerSignature(sellOrder, signature),
+            "Signature is not valid for SellOrder."
+        );
 
         // Check has started
-        require((block.timestamp > startTime), "SellOrder start time is in the future.");
+        require(
+            (block.timestamp > startTime),
+            "SellOrder start time is in the future."
+        );
 
         // Check not expired
         require((block.timestamp < expiration), "This sell order has expired.");
@@ -1671,10 +1836,10 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     }
 
     /*
-    * @dev Executes a trade given a buy order.
-    *
-    * Emits a {BuyOrderFilled} event.
-    */
+     * @dev Executes a trade given a buy order.
+     *
+     * Emits a {BuyOrderFilled} event.
+     */
     function fillBuyOrder(
         address payable buyer,
         address contractAddress,
@@ -1704,23 +1869,32 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         );
 
         /* First check signature */
-        require(_validateBuyerSignature(buyOrder, signature), "Signature is not valid for BuyOrder.");
+        require(
+            _validateBuyerSignature(buyOrder, signature),
+            "Signature is not valid for BuyOrder."
+        );
 
         /* Check has started */
-        require((block.timestamp > buyOrder.startTime), "This buy order's start time is in the future.");
+        require(
+            (block.timestamp > buyOrder.startTime),
+            "This buy order's start time is in the future."
+        );
 
         /* Check not expired */
-        require((block.timestamp < buyOrder.expiration), "This buy order has expired.");
-        
+        require(
+            (block.timestamp < buyOrder.expiration),
+            "This buy order has expired."
+        );
+
         _fillBuyOrder(buyOrder, signature, seller);
     }
 
     /*
-    * @dev External trade function. This accepts the details of the dutch auction order and signed dutch auction
-    * order (the signature) as a meta-transaction.
-    *
-    * Emits a {DutchAuctionOrderFilled} event via `_fillDutchAuctionOrder`.
-    */
+     * @dev External trade function. This accepts the details of the dutch auction order and signed dutch auction
+     * order (the signature) as a meta-transaction.
+     *
+     * Emits a {DutchAuctionOrderFilled} event via `_fillDutchAuctionOrder`.
+     */
     function fillDutchAuctionOrder(
         DutchAuctionOrder memory dutchAuctionOrder,
         bytes memory signature,
@@ -1728,52 +1902,87 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     ) external payable whenNotPaused nonReentrant {
         /* Make sure the order is not cancelled */
         require(
-            cancellationRegistry.getSellOrderCancellationBlockNumber(dutchAuctionOrder.seller, dutchAuctionOrder.contractAddress, dutchAuctionOrder.tokenId) < dutchAuctionOrder.createdAtBlockNumber,
+            cancellationRegistry.getSellOrderCancellationBlockNumber(
+                dutchAuctionOrder.seller,
+                dutchAuctionOrder.contractAddress,
+                dutchAuctionOrder.tokenId
+            ) < dutchAuctionOrder.createdAtBlockNumber,
             "This order has been cancelled."
         );
 
         /* First check signature */
-        require(_validateDutchAuctionSignature(dutchAuctionOrder, signature), "Signature is not valid for DutchAuctionOrder.");
+        require(
+            _validateDutchAuctionSignature(dutchAuctionOrder, signature),
+            "Signature is not valid for DutchAuctionOrder."
+        );
 
         // Check the dutch auction has started
-        require((block.timestamp > dutchAuctionOrder.startTime), "This dutch auction order has not started yet.");
+        require(
+            (block.timestamp > dutchAuctionOrder.startTime),
+            "This dutch auction order has not started yet."
+        );
 
         // Check not expired
-        require((block.timestamp < dutchAuctionOrder.endTime), "This dutch auction order has expired.");
+        require(
+            (block.timestamp < dutchAuctionOrder.endTime),
+            "This dutch auction order has expired."
+        );
 
         uint256 currentPrice = calculateCurrentPrice(
-            dutchAuctionOrder.startTime, 
-            dutchAuctionOrder.endTime, 
+            dutchAuctionOrder.startTime,
+            dutchAuctionOrder.endTime,
             dutchAuctionOrder.startPrice,
             dutchAuctionOrder.endPrice
         );
         // If the payment ERC20 is the zero address, we check that enough native ETH has been sent
         // with the transaction. Otherwise, we use the supplied ERC20 payment token.
         if (dutchAuctionOrder.paymentERC20 == address(0)) {
-            require(msg.value >= currentPrice, "The current price is higher than the payment submitted.");
+            require(
+                msg.value >= currentPrice,
+                "The current price is higher than the payment submitted."
+            );
         } else {
-            _checkValidERC20Payment(buyer, currentPrice, dutchAuctionOrder.paymentERC20);
+            _checkValidERC20Payment(
+                buyer,
+                currentPrice,
+                dutchAuctionOrder.paymentERC20
+            );
         }
 
         _fillDutchAuction(dutchAuctionOrder, buyer, currentPrice);
     }
 
     /*
-    * @dev Sets the royalty as an int out of 1000 that the creator should receive and the address to pay.
-    */
-    function setRoyalty(address contractAddress, address payable _payoutAddress, uint256 _payoutPerMille) external {
-        require(_payoutPerMille <= _maxRoyaltyPerMille, "Royalty must be between 0 and 15%");
-        require(contractAddress.supportsInterface(InterfaceId_ERC721) || contractAddress.supportsInterface(InterfaceId_ERC1155), "Is not ERC721 or ERC1155");
+     * @dev Sets the royalty as an int out of 1000 that the creator should receive and the address to pay.
+     */
+    function setRoyalty(
+        address contractAddress,
+        address payable _payoutAddress,
+        uint256 _payoutPerMille
+    ) external {
+        require(
+            _payoutPerMille <= _maxRoyaltyPerMille,
+            "Royalty must be between 0 and 15%"
+        );
+        require(
+            contractAddress.supportsInterface(InterfaceId_ERC721) ||
+                contractAddress.supportsInterface(InterfaceId_ERC1155),
+            "Is not ERC721 or ERC1155"
+        );
 
         Ownable ownableNFTContract = Ownable(contractAddress);
         require(_msgSender() == ownableNFTContract.owner());
 
-        royaltyRegistry.setRoyalty(contractAddress, _payoutAddress, _payoutPerMille);
+        royaltyRegistry.setRoyalty(
+            contractAddress,
+            _payoutAddress,
+            _payoutPerMille
+        );
     }
 
     /*
-    * @dev Cancels a buy order.
-    */
+     * @dev Cancels a buy order.
+     */
     function cancelBuyOrder(
         address payable buyer,
         address contractAddress,
@@ -1785,7 +1994,10 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         address paymentERC20,
         bytes memory signature
     ) external {
-        require((buyer == _msgSender() || owner() == _msgSender()), "Caller must be Exchange Owner or Order Signer");
+        require(
+            (buyer == _msgSender() || owner() == _msgSender()),
+            "Caller must be Exchange Owner or Order Signer"
+        );
 
         BuyOrder memory buyOrder = BuyOrder(
             buyer,
@@ -1798,69 +2010,97 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
             paymentERC20
         );
 
-        require(_validateBuyerSignature(buyOrder, signature), "Signature is not valid for BuyOrder.");
+        require(
+            _validateBuyerSignature(buyOrder, signature),
+            "Signature is not valid for BuyOrder."
+        );
 
         cancellationRegistry.cancelOrder(signature);
     }
 
     /*
-    * @dev Implements one-order-cancels-the-other (OCO) for a token
-    */
+     * @dev Implements one-order-cancels-the-other (OCO) for a token
+     */
     function cancelPreviousSellOrders(
         address addr,
         address tokenAddr,
         uint256 tokenId
     ) external {
-        require((addr == _msgSender() || owner() == _msgSender()), "Caller must be Exchange Owner or Order Signer");
+        require(
+            (addr == _msgSender() || owner() == _msgSender()),
+            "Caller must be Exchange Owner or Order Signer"
+        );
         cancellationRegistry.cancelPreviousSellOrders(addr, tokenAddr, tokenId);
     }
 
-    function calculateCurrentPrice(uint256 startTime, uint256 endTime, uint256 startPrice, uint256 endPrice) public view returns (uint256) {
+    function calculateCurrentPrice(
+        uint256 startTime,
+        uint256 endTime,
+        uint256 startPrice,
+        uint256 endPrice
+    ) public view returns (uint256) {
         uint256 auctionDuration = (endTime - startTime);
         uint256 timeRemaining = (endTime - block.timestamp);
 
-        uint256 perMilleRemaining = (1000000000000000 / auctionDuration) / (1000000000000 / timeRemaining);
+        uint256 perMilleRemaining = (1000000000000000 / auctionDuration) /
+            (1000000000000 / timeRemaining);
 
         uint256 variableAmount = startPrice - endPrice;
-        uint256 variableAmountRemaining = (perMilleRemaining * variableAmount) / 1000;
+        uint256 variableAmountRemaining = (perMilleRemaining * variableAmount) /
+            1000;
         return endPrice + variableAmountRemaining;
     }
 
     /*
-    * @dev Gets the royalty payout address.
-    */
-    function getRoyaltyPayoutAddress(address contractAddress) external view returns (address) {
+     * @dev Gets the royalty payout address.
+     */
+    function getRoyaltyPayoutAddress(address contractAddress)
+        external
+        view
+        returns (address)
+    {
         return royaltyRegistry.getRoyaltyPayoutAddress(contractAddress);
     }
 
     /*
-    * @dev Gets the royalty as a int out of 1000 that the creator should receive.
-    */
-    function getRoyaltyPayoutRate(address contractAddress) external view returns (uint256) {
+     * @dev Gets the royalty as a int out of 1000 that the creator should receive.
+     */
+    function getRoyaltyPayoutRate(address contractAddress)
+        external
+        view
+        returns (uint256)
+    {
         return royaltyRegistry.getRoyaltyPayoutRate(contractAddress);
     }
 
     /*
-    * @dev Check if an order has been cancelled.
-    */
-    function isOrderCancelled(bytes memory signature) public view returns (bool) {
+     * @dev Check if an order has been cancelled.
+     */
+    function isOrderCancelled(bytes memory signature)
+        public
+        view
+        returns (bool)
+    {
         return cancellationRegistry.isOrderCancelled(signature);
     }
-    
+
     /*******************
      * Admin Functions *
      *******************/
 
     /*
-    * @dev Sets the wallet for the exchange.
-    */
-    function setMakerWallet(address payable _newMakerWallet) external onlyOwner {
+     * @dev Sets the wallet for the exchange.
+     */
+    function setMakerWallet(address payable _newMakerWallet)
+        external
+        onlyOwner
+    {
         _makerWallet = _newMakerWallet;
     }
 
     /*
-    * @dev Sets the registry contracts for the exchange.
-    */
+     * @dev Sets the registry contracts for the exchange.
+     */
     function setRegistryContracts(
         address _royaltyRegistry,
         address _cancellationRegistry,
@@ -1872,24 +2112,24 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     }
 
     /*
-    * @dev Pauses trading on the exchange. To be used for emergencies.
-    */
+     * @dev Pauses trading on the exchange. To be used for emergencies.
+     */
     function pause() external onlyOwner {
         _pause();
     }
 
     /*
-    * @dev Resumes trading on the exchange. To be used for emergencies.
-    */
+     * @dev Resumes trading on the exchange. To be used for emergencies.
+     */
     function unpause() external onlyOwner {
         _unpause();
     }
 
     /*
-    * Withdraw just in case Ether is accidentally sent to this contract.
-    */
+     * Withdraw just in case Ether is accidentally sent to this contract.
+     */
     function withdraw() external onlyOwner {
-        uint balance = address(this).balance;
+        uint256 balance = address(this).balance;
         payable(msg.sender).transfer(balance);
     }
 
@@ -1898,27 +2138,48 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
      **********************/
 
     /*
-    * @dev Executes a trade given a sell order.
-    *
-    * Emits a {SellOrderFilled} event.
-    */
-    function _fillSellOrder(SellOrder memory sellOrder, address payable buyer) internal {
+     * @dev Executes a trade given a sell order.
+     *
+     * Emits a {SellOrderFilled} event.
+     */
+    function _fillSellOrder(SellOrder memory sellOrder, address payable buyer)
+        internal
+    {
         /////////////////
         ///  Finalize ///
         /////////////////
-        cancellationRegistry.cancelPreviousSellOrders(sellOrder.seller, sellOrder.contractAddress, sellOrder.tokenId);
-        emit SellOrderFilled(sellOrder.seller, buyer, sellOrder.contractAddress, sellOrder.tokenId, sellOrder.price);
+        cancellationRegistry.cancelPreviousSellOrders(
+            sellOrder.seller,
+            sellOrder.contractAddress,
+            sellOrder.tokenId
+        );
+        emit SellOrderFilled(
+            sellOrder.seller,
+            buyer,
+            sellOrder.contractAddress,
+            sellOrder.tokenId,
+            sellOrder.price
+        );
 
         /////////////////
         ///  Transfer ///
         /////////////////
-        _transferNFT(sellOrder.contractAddress, sellOrder.tokenId, sellOrder.seller, buyer, sellOrder.quantity);
+        _transferNFT(
+            sellOrder.contractAddress,
+            sellOrder.tokenId,
+            sellOrder.seller,
+            buyer,
+            sellOrder.quantity
+        );
 
         //////////////////////
         ///  Send Payment ///
         /////////////////////
         if (sellOrder.paymentERC20 == address(0)) {
-            _sendETHPaymentsWithRoyalties(sellOrder.contractAddress, sellOrder.seller);
+            _sendETHPaymentsWithRoyalties(
+                sellOrder.contractAddress,
+                sellOrder.seller
+            );
         } else if (sellOrder.price > 0) {
             _sendERC20PaymentsWithRoyalties(
                 sellOrder.contractAddress,
@@ -1931,15 +2192,23 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     }
 
     /*
-    * @dev Sends out ETH payments to marketplace, royalty, and the final recipients
-    */
-    function _sendETHPaymentsWithRoyalties(address contractAddress, address payable finalRecipient) internal {
-        uint256 royaltyPayout = (royaltyRegistry.getRoyaltyPayoutRate(contractAddress) * msg.value) / 1000;
+     * @dev Sends out ETH payments to marketplace, royalty, and the final recipients
+     */
+    function _sendETHPaymentsWithRoyalties(
+        address contractAddress,
+        address payable finalRecipient
+    ) internal {
+        uint256 royaltyPayout = (royaltyRegistry.getRoyaltyPayoutRate(
+            contractAddress
+        ) * msg.value) / 1000;
         uint256 makerPayout = (_makerFeePerMille * msg.value) / 1000;
         uint256 remainingPayout = msg.value - royaltyPayout - makerPayout;
 
         if (royaltyPayout > 0) {
-            Address.sendValue(royaltyRegistry.getRoyaltyPayoutAddress(contractAddress), royaltyPayout);
+            Address.sendValue(
+                royaltyRegistry.getRoyaltyPayoutAddress(contractAddress),
+                royaltyPayout
+            );
         }
 
         Address.sendValue(_makerWallet, makerPayout);
@@ -1953,7 +2222,9 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         uint256 price,
         address paymentERC20
     ) internal {
-        uint256 royaltyPayout = (royaltyRegistry.getRoyaltyPayoutRate(contractAddress) * price) / 1000;
+        uint256 royaltyPayout = (royaltyRegistry.getRoyaltyPayoutRate(
+            contractAddress
+        ) * price) / 1000;
         uint256 makerPayout = (_makerFeePerMille * price) / 1000;
         uint256 remainingPayout = price - royaltyPayout - makerPayout;
 
@@ -1971,9 +2242,16 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
 
     /* Checks that the payment is being made with an approved ERC20, and that we are allowed to operate
      * a sufficient amount of it. */
-    function _checkValidERC20Payment(address buyer, uint256 price, address paymentERC20) internal view {
+    function _checkValidERC20Payment(
+        address buyer,
+        uint256 price,
+        address paymentERC20
+    ) internal view {
         // Checks that the ERC20 payment token is approved in the registry.
-        require(paymentERC20Registry.isApprovedERC20(paymentERC20), "Payment ERC20 is not approved.");
+        require(
+            paymentERC20Registry.isApprovedERC20(paymentERC20),
+            "Payment ERC20 is not approved."
+        );
 
         // Checks that the buyer has sufficient funds.
         require(
@@ -1989,15 +2267,18 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     }
 
     /*
-    * @dev Validate the sell order against the signature of the meta-transaction.
-    */
-    function _validateSellerSignature(SellOrder memory sellOrder, bytes memory signature) internal view returns (bool) {
-
+     * @dev Validate the sell order against the signature of the meta-transaction.
+     */
+    function _validateSellerSignature(
+        SellOrder memory sellOrder,
+        bytes memory signature
+    ) internal view returns (bool) {
         bytes32 SELLORDER_TYPEHASH = keccak256(
             "SellOrder(address seller,address contractAddress,uint256 tokenId,uint256 startTime,uint256 expiration,uint256 price,uint256 quantity,uint256 createdAtBlockNumber,address paymentERC20)"
         );
 
-        bytes32 structHash = keccak256(abi.encode(
+        bytes32 structHash = keccak256(
+            abi.encode(
                 SELLORDER_TYPEHASH,
                 sellOrder.seller,
                 sellOrder.contractAddress,
@@ -2008,7 +2289,8 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
                 sellOrder.quantity,
                 sellOrder.createdAtBlockNumber,
                 sellOrder.paymentERC20
-            ));
+            )
+        );
 
         bytes32 digest = ECDSA.toTypedDataHash(DOMAIN_SEPARATOR, structHash);
 
@@ -2017,15 +2299,18 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
     }
 
     /*
-    * @dev Validate the sell order against the signature of the meta-transaction.
-    */
-    function _validateBuyerSignature(BuyOrder memory buyOrder, bytes memory signature) internal view returns (bool) {
-
+     * @dev Validate the sell order against the signature of the meta-transaction.
+     */
+    function _validateBuyerSignature(
+        BuyOrder memory buyOrder,
+        bytes memory signature
+    ) internal view returns (bool) {
         bytes32 BUYORDER_TYPEHASH = keccak256(
             "BuyOrder(address buyer,address contractAddress,uint256 tokenId,uint256 startTime,uint256 expiration,uint256 price,uint256 quantity,address paymentERC20)"
         );
 
-        bytes32 structHash = keccak256(abi.encode(
+        bytes32 structHash = keccak256(
+            abi.encode(
                 BUYORDER_TYPEHASH,
                 buyOrder.buyer,
                 buyOrder.contractAddress,
@@ -2035,7 +2320,8 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
                 buyOrder.price,
                 buyOrder.quantity,
                 buyOrder.paymentERC20
-            ));
+            )
+        );
 
         bytes32 digest = ECDSA.toTypedDataHash(DOMAIN_SEPARATOR, structHash);
 
@@ -2044,17 +2330,33 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         return recoveredAddress == buyOrder.buyer;
     }
 
-    function _fillBuyOrder(BuyOrder memory buyOrder, bytes memory signature, address payable seller) internal {
+    function _fillBuyOrder(
+        BuyOrder memory buyOrder,
+        bytes memory signature,
+        address payable seller
+    ) internal {
         /////////////////
         ///  Finalize ///
         /////////////////
         cancellationRegistry.cancelOrder(signature);
-        emit BuyOrderFilled(seller, buyOrder.buyer, buyOrder.contractAddress, buyOrder.tokenId, buyOrder.price);
+        emit BuyOrderFilled(
+            seller,
+            buyOrder.buyer,
+            buyOrder.contractAddress,
+            buyOrder.tokenId,
+            buyOrder.price
+        );
 
         /////////////////
         ///  Transfer ///
         /////////////////
-        _transferNFT(buyOrder.contractAddress, buyOrder.tokenId, seller, buyOrder.buyer, buyOrder.quantity);
+        _transferNFT(
+            buyOrder.contractAddress,
+            buyOrder.tokenId,
+            seller,
+            buyOrder.buyer,
+            buyOrder.quantity
+        );
 
         //////////////////////
         ///  Send Payment ///
@@ -2078,20 +2380,41 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         /////////////////
         ///  Finalize ///
         /////////////////
-        cancellationRegistry.cancelPreviousSellOrders(dutchAuctionOrder.seller, dutchAuctionOrder.contractAddress, dutchAuctionOrder.tokenId);
-        uint256 amountPaid = dutchAuctionOrder.paymentERC20 == address(0) ? msg.value : currentPrice;
-        emit DutchAuctionFilled(dutchAuctionOrder.seller, buyer, dutchAuctionOrder.contractAddress, dutchAuctionOrder.tokenId, amountPaid);
+        cancellationRegistry.cancelPreviousSellOrders(
+            dutchAuctionOrder.seller,
+            dutchAuctionOrder.contractAddress,
+            dutchAuctionOrder.tokenId
+        );
+        uint256 amountPaid = dutchAuctionOrder.paymentERC20 == address(0)
+            ? msg.value
+            : currentPrice;
+        emit DutchAuctionFilled(
+            dutchAuctionOrder.seller,
+            buyer,
+            dutchAuctionOrder.contractAddress,
+            dutchAuctionOrder.tokenId,
+            amountPaid
+        );
 
         /////////////////
         ///  Transfer ///
         /////////////////
-        _transferNFT(dutchAuctionOrder.contractAddress, dutchAuctionOrder.tokenId, dutchAuctionOrder.seller, buyer, dutchAuctionOrder.quantity);
+        _transferNFT(
+            dutchAuctionOrder.contractAddress,
+            dutchAuctionOrder.tokenId,
+            dutchAuctionOrder.seller,
+            buyer,
+            dutchAuctionOrder.quantity
+        );
 
         //////////////////////
         ///  Send Payment ///
         /////////////////////
         if (dutchAuctionOrder.paymentERC20 == address(0)) {
-            _sendETHPaymentsWithRoyalties(dutchAuctionOrder.contractAddress, dutchAuctionOrder.seller);
+            _sendETHPaymentsWithRoyalties(
+                dutchAuctionOrder.contractAddress,
+                dutchAuctionOrder.seller
+            );
         } else if (currentPrice > 0) {
             _sendERC20PaymentsWithRoyalties(
                 dutchAuctionOrder.contractAddress,
@@ -2107,12 +2430,12 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         DutchAuctionOrder memory dutchAuctionOrder,
         bytes memory signature
     ) internal view returns (bool) {
-
         bytes32 DUTCHAUCTIONORDER_TYPEHASH = keccak256(
             "DutchAuctionOrder(address seller,address contractAddress,uint256 tokenId,uint256 startTime,uint256 endTime,uint256 startPrice,uint256 endPrice,uint256 quantity,uint256 createdAtBlockNumber,address paymentERC20)"
         );
 
-        bytes32 structHash = keccak256(abi.encode(
+        bytes32 structHash = keccak256(
+            abi.encode(
                 DUTCHAUCTIONORDER_TYPEHASH,
                 dutchAuctionOrder.seller,
                 dutchAuctionOrder.contractAddress,
@@ -2124,7 +2447,8 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
                 dutchAuctionOrder.quantity,
                 dutchAuctionOrder.createdAtBlockNumber,
                 dutchAuctionOrder.paymentERC20
-            ));
+            )
+        );
 
         bytes32 digest = ECDSA.toTypedDataHash(DOMAIN_SEPARATOR, structHash);
 
@@ -2133,18 +2457,26 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         return recoveredAddress == dutchAuctionOrder.seller;
     }
 
-    function _transferNFT(address contractAddress, uint256 tokenId, address seller, address buyer, uint256 quantity) internal {
+    function _transferNFT(
+        address contractAddress,
+        uint256 tokenId,
+        address seller,
+        address buyer,
+        uint256 quantity
+    ) internal {
         if (contractAddress.supportsInterface(InterfaceId_ERC721)) {
             IERC721 erc721 = IERC721(contractAddress);
 
             /* require is approved for all */
-            require(erc721.isApprovedForAll(seller, address(this)), "The Exchange is not approved to operate this NFT");
+            require(
+                erc721.isApprovedForAll(seller, address(this)),
+                "The Exchange is not approved to operate this NFT"
+            );
 
             /////////////////
             ///  Transfer ///
             /////////////////
             erc721.transferFrom(seller, buyer, tokenId);
-
         } else if (contractAddress.supportsInterface(InterfaceId_ERC1155)) {
             IERC1155 erc1155 = IERC1155(contractAddress);
 
@@ -2152,9 +2484,10 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
             ///  Transfer ///
             /////////////////
             erc1155.safeTransferFrom(seller, buyer, tokenId, quantity, "");
-
         } else {
-            revert("We don't recognize the NFT as either an ERC721 or ERC1155.");
+            revert(
+                "We don't recognize the NFT as either an ERC721 or ERC1155."
+            );
         }
     }
 }

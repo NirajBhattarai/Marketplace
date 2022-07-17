@@ -27,9 +27,7 @@ abstract contract Context {
     }
 }
 
-
 // File @openzeppelin/contracts/access/Ownable.sol@v4.5.0
-
 
 // OpenZeppelin Contracts v4.4.1 (access/Ownable.sol)
 
@@ -50,7 +48,10 @@ pragma solidity ^0.8.0;
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -90,7 +91,10 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        require(
+            newOwner != address(0),
+            "Ownable: new owner is the zero address"
+        );
         _transferOwnership(newOwner);
     }
 
@@ -105,34 +109,32 @@ abstract contract Ownable is Context {
     }
 }
 
-
 // File contracts/PaymentERC20Registry.sol
-
 
 pragma solidity ^0.8.0;
 
 contract PaymentERC20Registry is Ownable {
-  // Maps an ERC20 address to whether or not it is approved.
-  mapping(address => bool) private _approved;
+    // Maps an ERC20 address to whether or not it is approved.
+    mapping(address => bool) private _approved;
 
-  /**
-   * @dev Returns true if the ERC20 is approved for payments.
-   */
-  function isApprovedERC20(address _token) external view returns (bool) {
-    return _approved[_token];
-  }
+    /**
+     * @dev Returns true if the ERC20 is approved for payments.
+     */
+    function isApprovedERC20(address _token) external view returns (bool) {
+        return _approved[_token];
+    }
 
-  /**
-   * @dev Approves the ERC20 to be approved for payments.
-   */
-  function addApprovedERC20(address _token) external onlyOwner {
-    _approved[_token] = true;
-  }
+    /**
+     * @dev Approves the ERC20 to be approved for payments.
+     */
+    function addApprovedERC20(address _token) external onlyOwner {
+        _approved[_token] = true;
+    }
 
-  /**
-   * @dev Removes the ERC20 from the registry.
-   */
-  function removeApprovedERC20(address _token) external onlyOwner {
-    _approved[_token] = false;   
-  }
+    /**
+     * @dev Removes the ERC20 from the registry.
+     */
+    function removeApprovedERC20(address _token) external onlyOwner {
+        _approved[_token] = false;
+    }
 }
