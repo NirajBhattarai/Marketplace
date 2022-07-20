@@ -9,12 +9,12 @@ const hre = require("hardhat");
 async function main() {
   
 
-  const ExchangeV4 = await hre.ethers.getContractFactory("ExchangeV4");
-  const exchangeV4 = await ExchangeV4.deploy();
+  const ExchangeRegistry = await hre.ethers.getContractFactory("ExchangeRegistry");
+  const exchangeRegistry = await ExchangeRegistry.deploy();
 
-  await exchangeV4.deployed();
+  await exchangeRegistry.deployed();
 
-  console.log("ExchangeV4 with 1 ETH deployed to:", exchangeV4.address);
+  console.log("ExchangeRegistry with 1 ETH deployed to:", exchangeRegistry.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
