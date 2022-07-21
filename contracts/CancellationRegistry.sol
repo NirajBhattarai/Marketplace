@@ -148,11 +148,8 @@ contract CancellationRegistry is Ownable {
         address tokenAddr,
         uint256 tokenId
     ) external onlyRegistrants {
-        bytes32 cancellationDigest = keccak256(
-            abi.encode(seller, tokenAddr, tokenId)
-        );
-        orderCancellationBlockNumber[cancellationDigest] = ArbSys(address(100))
-            .arbBlockNumber();
+        bytes32 cancellationDigest = keccak256(abi.encode(seller, tokenAddr, tokenId));
+        orderCancellationBlockNumber[cancellationDigest] = block.number;
     }
 
     /*
@@ -163,27 +160,20 @@ contract CancellationRegistry is Ownable {
         address tokenAddr,
         uint256 tokenId
     ) external view returns (uint256) {
-        bytes32 cancellationDigest = keccak256(
-            abi.encode(addr, tokenAddr, tokenId)
-        );
+        bytes32 cancellationDigest = keccak256(abi.encode(addr, tokenAddr, tokenId));
         return orderCancellationBlockNumber[cancellationDigest];
     }
-
     /*
-     * @dev Cancels an order.
-     */
+    * @dev Cancels an order.
+    */
     function cancelOrder(bytes memory signature) external onlyRegistrants {
         orderDeactivations[signature] = true;
     }
 
     /*
-     * @dev Check if an order has been cancelled.
-     */
-    function isOrderCancelled(bytes memory signature)
-        external
-        view
-        returns (bool)
-    {
+    * @dev Check if an order has been cancelled.
+    */
+    function isOrderCancelled(bytes memory signature) external view returns (bool) {
         return orderDeactivations[signature];
     }
 }
