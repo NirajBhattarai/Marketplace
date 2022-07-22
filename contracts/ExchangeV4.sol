@@ -1720,7 +1720,7 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
 
     /* This contains all data of the BuyOrder */
     struct BuyOrder {
-        /* Seller of the NFT */
+        /* Buyer of the NFT */
         address payable buyer;
         /* Contract address of NFT */
         address contractAddress;
@@ -1781,7 +1781,8 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
         uint256 quantity,
         uint256 createdAtBlockNumber,
         address paymentERC20,
-        bytes memory signature,
+        bytes memory sellerSignature,
+        bytes memory buyerSignature,
         address payable buyer
     ) external payable whenNotPaused nonReentrant {
         // If the payment ERC20 is the zero address, we check that enough native ETH has been sent
@@ -1817,9 +1818,9 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
             "This order has been cancelled."
         );
 
-        /* Check signature */
+        /* Check Sell Order signature */
         require(
-            _validateSellerSignature(sellOrder, signature),
+            _validateSellerSignature(sellOrder, sellerSignature, buyerSignature, buyer),
             "Signature is not valid for SellOrder."
         );
 
@@ -2271,7 +2272,9 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
      */
     function _validateSellerSignature(
         SellOrder memory sellOrder,
-        bytes memory signature
+        bytes memory sellerSignature,
+        bytes memory buyerSignature,
+        address buyer
     ) internal view returns (bool) {
         bytes32 SELLORDER_TYPEHASH = keccak256(
             "SellOrder(address seller,address contractAddress,uint256 tokenId,uint256 startTime,uint256 expiration,uint256 price,uint256 quantity,uint256 createdAtBlockNumber,address paymentERC20)"
@@ -2294,8 +2297,12 @@ contract ExchangeV4 is Ownable, Pausable, ReentrancyGuard {
 
         bytes32 digest = ECDSA.toTypedDataHash(DOMAIN_SEPARATOR, structHash);
 
-        address recoveredAddress = ECDSA.recover(digest, signature);
-        return recoveredAddress == sellOrder.seller;
+        address recoveredSellerAddress = ECDSA.recover(digest, sellerSignature);
+        if (recoveredSellerAddress == sellOrder.seller) {
+            address recoveredBuyerAddress = ECDSA.recover(digest, buyerSignature);
+            return recoveredBuyerAddress == buyer;
+        }
+        return false;
     }
 
     /*
