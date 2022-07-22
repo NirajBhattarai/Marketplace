@@ -118,6 +118,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await expect(marketplace.fillSellOrder(
         owner.address,
         testNFT.address,
@@ -129,6 +137,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         constants.AddressZero,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("Transaction doesn't have the required ETH amount.");
     });
@@ -154,6 +163,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await expect(marketplace.fillSellOrder(
         owner.address,
         testNFT.address,
@@ -165,6 +182,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("Payment ERC20 is not approved.");
     });
@@ -190,6 +208,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await expect(marketplace.fillSellOrder(
         owner.address,
@@ -202,6 +228,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("Buyer has an insufficient balance of the ERC20.");
     });
@@ -227,6 +254,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await expect(marketplace.fillSellOrder(
@@ -240,6 +275,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("Exchange is not approved to handle a sufficient amount of the ERC20.");
     });
@@ -265,6 +301,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -279,6 +323,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("Signature is not valid for SellOrder.");
     });
@@ -311,6 +356,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -325,6 +378,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("This order has been cancelled.");
     });
@@ -350,6 +404,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -364,6 +426,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("SellOrder start time is in the future.");
     });
@@ -389,6 +452,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -403,6 +474,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("This sell order has expired.");
     });
@@ -430,6 +502,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -444,6 +524,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("The Exchange is not approved to operate this NFT");
     });
@@ -471,6 +552,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -486,6 +575,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       )).to.be.revertedWith("We don't recognize the NFT as either an ERC721 or ERC1155.");
     });
@@ -513,6 +603,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -529,10 +627,12 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       );
       const predictBalance = ethers.BigNumber.from(prevBalance).sub(utils.parseEther('10'));
       expect(await erc20.balanceOf(addr1.address)).to.equal(predictBalance);
+      expect(await testNFT.ownerOf(0)).to.equal(addr1.address);
     });
 
     it("Irregular NFT Transfer - multiple times", async function () {
@@ -558,6 +658,14 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
+      const buyerSignature = await addr1._signTypedData(
+        {
+          name: "Pocket Of Quarters",
+          version: "4"
+        },
+        sellOrderTypes,
+        sellOrder
+      );
       await paymentERC20Registry.addApprovedERC20(erc20.address);
       await erc20.mint(addr1.address, initialBalance);
       await erc20.connect(addr1).approve(marketplace.address, initialBalance);
@@ -576,6 +684,7 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
       );
       sellOrder.tokenId = 1;
@@ -587,7 +696,7 @@ describe("NFTMarketPlace", function () {
         sellOrderTypes,
         sellOrder
       );
-      await marketplace.fillSellOrder(
+      await expect(marketplace.fillSellOrder(
         owner.address,
         testNFT.address,
         1,
@@ -598,31 +707,10 @@ describe("NFTMarketPlace", function () {
         currentBlockNumber,
         erc20.address,
         signature,
+        buyerSignature,
         addr1.address
-      );
-      sellOrder.tokenId = 2;
-      signature = await owner._signTypedData(
-        {
-          name: "Pocket Of Quarters",
-          version: "4"
-        },
-        sellOrderTypes,
-        sellOrder
-      );
-      await marketplace.fillSellOrder(
-        owner.address,
-        testNFT.address,
-        2,
-        currentTime,
-        currentTime + 10 ** 6,
-        utils.parseEther('10'),
-        1,
-        currentBlockNumber,
-        erc20.address,
-        signature,
-        addr1.address
-      );
-      const predictBalance = ethers.BigNumber.from(prevBalance).sub(utils.parseEther('30'));
+      )).to.be.revertedWith("Signature is not valid for SellOrder.");
+      const predictBalance = ethers.BigNumber.from(prevBalance).sub(utils.parseEther('10'));
       expect(await erc20.balanceOf(addr1.address)).to.equal(predictBalance);
     });
   })
